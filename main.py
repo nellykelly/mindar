@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 import webapp2
+from datetime import timedelta
 from datetime import datetime
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -28,3 +29,22 @@ class RemHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
 ], debug=True)
+
+
+
+x = datetime.now()
+Event = raw_input("What do you have to do?")
+'''x = datetime.now().replace(microsecond=0)'''
+
+'''
+Current_Time = current time at the moment
+def remind("Event"):
+	ask the question "What do you want to do?"
+	save answer as a variable --> "Event" --> posssibly a dictionary
+	ask "What time?"
+	save the answer as a key of Event
+	ask "Where?"
+	save the answer as a key of Event
+	"Event" = {time, place}
+
+
