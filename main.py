@@ -15,10 +15,15 @@
 # limitations under the License.
 #
 import webapp2
-
+from datetime import datetime
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('')
+
+class RemHandler(webapp2.RequestHandler):
+	def get(self):
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
