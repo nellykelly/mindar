@@ -1,0 +1,23 @@
+h1{
+	text-align: center;
+	color: white;
+}
+#remind{
+	text-decoration-color: black;
+	background-color: red;
+	width: 500px;
+	height: 500px;
+	margin: 20px;
+}
+#chat{
+	text-decoration-color: black;
+	background-color: blue;
+	width: 500px;
+	height: 500px;
+	margin: 20px;
+
+	display: inline;
+}
+body{
+	background-color: black;
+}
