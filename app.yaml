@@ -1,4 +1,4 @@
-application: mindar
+application: mindar-173620
 version: 1
 runtime: python27
 api_version: 1
