@@ -22,7 +22,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
-
+		self.response.write('')
 
 
 app = webapp2.WSGIApplication([
