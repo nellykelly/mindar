@@ -1,0 +1,14 @@
+body{
+	background-color: black;
+	text-align: center;
+}
+form{
+	color: white;
+	font-size: 40px;
+}
+input, select{
+	font-size: 20px;
+}
+button{
+	text-align: center;
+}
