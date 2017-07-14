@@ -3,7 +3,6 @@ h1{
 	color: white;
 }
 #remind{
-	text-decoration-color: black;
 	background-color: red;
 	width: 400px;
 	height: 500px;
@@ -13,7 +12,6 @@ h1{
 	float: left;
 }
 #chat{
-	text-decoration-color: black;
 	background-color: blue;
 	width: 400px;
 	height: 500px;
@@ -21,11 +19,15 @@ h1{
 	float: right;
 
 }
+a{
+	color: black;
+}
 body{
 	background-color: black;
+	
 }
-/*div{ 
-	position: fixed;
-	color: yellow;
-	border-style: solid;
-}*/
+div{ 
+	text-align: center;
+	columns: 2;
+}
+
