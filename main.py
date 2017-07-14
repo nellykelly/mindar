@@ -19,6 +19,7 @@ from datetime import datetime
 '''datetime library --->   https://docs.python.org/3/library/datetime.html#datetime.date'''
 from datetime import timedelta
 import time 
+'''time format ---> https://docs.python.org/2/library/time.html#time.strftime'''
 '''time library  --->    https://docs.python.org/2/library/time.html'''
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -35,10 +36,19 @@ app = webapp2.WSGIApplication([
 
 x = datetime.now()
 ''' date format = (year, month, day, hour, minutes, seconds, milliseconds)'''
-Event = raw_input("What do you have to do?")
+Event_List = {}
+
 '''x = datetime.now().replace(microsecond=0)'''
 today = time.localtime().tm_wday
 print today
+def remind ():
+	Event = raw_input("What do you have to do?")
+	month = int(raw_input("What month?"))
+	day = int(raw_input("What day?"))
+	yea = int(raw_input("What year?"))
+	Date = datetime.date(yea, month, day)
+	print Date
+
 '''gives the current day where 0 is Monday and 6 is Sunday'''
 '''
 Current_Time = current time at the moment
@@ -55,6 +65,7 @@ def remind("Event"):
 
 '''BRIEF DESCRIPTION INCOMING
 When website is opened it should check the day and time
+	today = time.localtime().tm_wday
 	If its already open then maybe it should refresh every min or so
 When USER clicks REMIMD button it should take them to a form
 	The form ask for the EVENT and the DATE/TIME for the event
