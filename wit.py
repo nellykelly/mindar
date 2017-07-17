@@ -44,3 +44,27 @@
 # }
 
 # client = Wit(access_token=access_token, actions=actions)
+
+
+
+class AI():
+	def userinput(userinput):
+
+		alarm = False
+		check = False
+		what = False
+		arr = userinput.split()
+		print(arr)
+		for i in arr:
+			if i == alarm:
+				alarm = True
+				
+
+
+			if i == check:
+				check = True
+			if i == what:
+				what = True
+
+
+	
