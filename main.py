@@ -23,6 +23,8 @@ import os
 import urllib
 import urllib2
 import json
+from wit import Wit
+import logging
 
 import webapp2
 from datetime import datetime
@@ -38,6 +40,28 @@ jinja_environment = jinja2.Environment(
 
 
 
+#THIS IS WHERE WIT IS
+def send(request, response):
+    print('Sending to user...', response['text'])
+def my_action(request):
+    print('Received from user...', request['text'])
+
+
+class messages(ndb.Model):
+    content = ndb.StringProperty()
+
+
+
+
+actions = {
+    'send': send,
+    'my_action': my_action,
+}
+
+client = Wit(access_token=OKSUUQPRQUJD6CLD2GINQGA47UR7TBX4, actions=actions)
+
+#END WIT
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('')
@@ -45,6 +69,30 @@ class MainHandler(webapp2.RequestHandler):
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write('')
+
+class ChatHandler(webapp2.RequestHandler):
+	def get(self):
+		content = self.request.get('content')
+		message = self.request.get('message')
+
+		content_model = Content(content = content)
+        content_key = content_model.put()
+		print(message + " : user just said this")
+		resp = client.message(message)
+
+
+		template = jinja_environment.get_template('chat.html')
+		self.response.out.write(template.render({
+			'resp' :resp,
+		}))
+
+
+	def post(self):
+		results_template = env.get_template('chatresponce.html')
+
+		print('Yay, got Wit.ai response: ' + str(resp))
+
+
 
 
 app = webapp2.WSGIApplication([

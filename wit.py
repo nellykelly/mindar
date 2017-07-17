@@ -43,4 +43,4 @@ actions = {
     'my_action': my_action,
 }
 
-client = Wit(access_token=OKSUUQPRQUJD6CLD2GINQGA47UR7TBX4, actions=actions)
+client = Wit(access_token=access_token, actions=actions)
