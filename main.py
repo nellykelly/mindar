@@ -34,7 +34,7 @@ import time
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('')
-
+        template = jinja_environment.get_template('index.html')
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write('')
