@@ -60,15 +60,17 @@ x = datetime.now()
 Event_List = {}
 
 '''x = datetime.now().replace(microsecond=0)'''
-today = time.localtime().tm_wday
+today = (time.strftime("%m-%d-%Y"))
 print today
 def remind ():
-	Event = raw_input("What do you have to do?")
-	month = int(raw_input("What month?"))
-	day = int(raw_input("What day?"))
-	yea = int(raw_input("What year?"))
+	Event = str(raw_input("What do you have to do?"))
+	month = str(raw_input("What month?"))
+	day = str(raw_input("What day?"))
+	year = str(raw_input("What year?"))
 	Date = datetime.date(yea, month, day)
-	print Date
+	DateOfEvent = str(month+"-"+day+"-"+year)
+	if today in EventList:
+		print EventList[today]
 
 '''gives the current day where 0 is Monday and 6 is Sunday'''
 '''
