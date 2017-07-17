@@ -31,6 +31,13 @@ from datetime import timedelta
 import time 
 '''time format ---> https://docs.python.org/2/library/time.html#time.strftime'''
 '''time library  --->    https://docs.python.org/2/library/time.html'''
+
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
+
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('')
