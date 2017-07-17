@@ -25,6 +25,7 @@ import urllib2
 import json
 
 import webapp2
+from datetime import timedelta
 from datetime import datetime
 '''datetime library --->   https://docs.python.org/3/library/datetime.html#datetime.date'''
 from datetime import timedelta
@@ -49,6 +50,12 @@ app = webapp2.WSGIApplication([
 
 
 x = datetime.now()
+Event = raw_input("What do you have to do?")
+'''x = datetime.now().replace(microsecond=0)'''
+
+=======
+
+x = datetime.now()
 ''' date format = (year, month, day, hour, minutes, seconds, milliseconds)'''
 Event_List = {}
 
@@ -64,6 +71,8 @@ def remind ():
 	print Date
 
 '''gives the current day where 0 is Monday and 6 is Sunday'''
+
+
 '''
 Current_Time = current time at the moment
 def remind("Event"):
@@ -73,11 +82,13 @@ def remind("Event"):
 	save the answer as a key of Event
 	ask "Where?"
 	save the answer as a key of Event
-	"Event" = {time, place}'''
+  	"Event" = {time, place}
 
 
-
-'''BRIEF DESCRIPTION INCOMING
+=======
+	"Event" = {time, place}
+  
+  BRIEF DESCRIPTION INCOMING
 When website is opened it should check the day and time
 	today = time.localtime().tm_wday
 	If its already open then maybe it should refresh every min or so
@@ -88,3 +99,4 @@ When USER clicks REMIMD button it should take them to a form
 If the website is checking and it detects a key with the current date
 	it has an alert or something pop up displaying the EVENT name and time
 	'''
+
