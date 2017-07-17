@@ -50,21 +50,32 @@
 class AI():
 	def userinput(userinput):
 
+		time = False
 		alarm = False
 		check = False
 		what = False
+		alarmclock = False
+		chnage = True
+
 		arr = userinput.split()
 		print(arr)
 		for i in arr:
-			if i == alarm:
+			if i == "alarm":
 				alarm = True
-				
-
-
-			if i == check:
+			if i == "check":
 				check = True
-			if i == what:
+			if i == "what":
 				what = True
+			if i == "alarmclock":
+				alarmclock = True
+			if i == "change":
+				change = True
+
+		if alarm == True:
+			"would you like to change, delete, or add an alarm?"
+
+		if alarm == True && change == True:
+			
 
 
 	
