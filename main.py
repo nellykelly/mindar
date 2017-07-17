@@ -14,6 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+import random
+import logging
+import webapp2
+import jinja2
+import os
+import urllib
+import urllib2
+import json
+
 import webapp2
 from datetime import datetime
 '''datetime library --->   https://docs.python.org/3/library/datetime.html#datetime.date'''
@@ -31,8 +41,12 @@ class RemHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/chat', Chathandler)
 ], debug=True)
+
+
+
 
 x = datetime.now()
 ''' date format = (year, month, day, hour, minutes, seconds, milliseconds)'''
@@ -73,3 +87,4 @@ When USER clicks REMIMD button it should take them to a form
 	Maybe these are saved locally?
 If the website is checking and it detects a key with the current date
 	it has an alert or something pop up displaying the EVENT name and time
+	'''

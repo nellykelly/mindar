@@ -14,25 +14,27 @@ class messages(ndb.Model):
     content = ndb.StringProperty()
 
 
-class chatHandler(webapp2.RequestHandler):
+class ChatHandler(webapp2.RequestHandler):
 	def get(self):
 		content = self.request.get('content')
+		message = self.request.get('message')
 
-		content_model = Student(content = content)
+		content_model = Content(content = content)
         content_key = content_model.put()
-		print(userms + "user just said this")
-
+		print(message + " : user just said this")
+		resp = client.message(message)
 
 
 		template = jinja_environment.get_template('chat.html')
-
-		# self.response.out.write(template.render({
-		# 	'' : ,
-		# }))
+		self.response.out.write(template.render({
+			'resp' :resp,
+		}))
 
 
 	def post(self):
+		results_template = env.get_template('chatresponce.html')
 
+		print('Yay, got Wit.ai response: ' + str(resp))
 
 
 
