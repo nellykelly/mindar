@@ -47,6 +47,36 @@ class RemHandler(webapp2.RequestHandler):
 		self.response.write('')
 
 
+class ChatHandler(webapp2.RequestHandler):
+	def get(self):
+		message = ndb.StringProperty()
+		responce = ndb.StringProperty()
+
+
+#		content = self.request.get('content')
+		message = self.request.get('message')
+
+
+		message_model = Message(content = message)
+        content_key = message_model.put()
+        print(message + " : user just said this")
+
+        ai = AI()
+        userinput = getattr(ai, userinput)
+        responce = userinput(message)
+
+
+
+
+		template = jinja_environment.get_template('chat.html')
+		self.response.out.write(template.render({
+			'resp' :responce,
+		}))
+
+	def post(self):
+		results_template = env.get_template('chatresponce.html')
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/chat', Chathandler)
@@ -71,6 +101,53 @@ def remind ():
 	DateOfEvent = str(month+"-"+day+"-"+year)
 	if today in EventList:
 		print EventList[today]
+
+
+
+
+
+
+
+
+class AI():
+	def userinput(userinput):
+
+		time = False
+		alarm = False
+		check = False
+		what = False
+		alarmclock = False
+		chnage = True
+		reminder = True
+
+
+		arr = userinput.split()
+		print(arr)
+		for i in arr:
+			if i == "alarm":
+				alarm = True
+			if i == "check":
+				check = True
+			if i == "what":
+				what = True
+			if i == "alarmclock":
+				alarmclock = True
+			if i == "change":
+				change = True
+			if i == "reminder":
+				reminder = True
+
+		if alarm == True || alarmclock == True:
+			 "would you like to change, delete, or add an alarm?"
+
+		if alarm == True && change == True:
+
+
+
+
+
+
+
 
 '''gives the current day where 0 is Monday and 6 is Sunday'''
 '''
