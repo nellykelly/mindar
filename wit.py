@@ -71,11 +71,45 @@ class AI():
 			if i == "change":
 				change = True
 
-		if alarm == True:
-			"would you like to change, delete, or add an alarm?"
+		if alarm == True || alarmclock == True:
+			String alarmchange = "would you like to change, delete, or add an alarm?"
 
 		if alarm == True && change == True:
-			
+
+
+
+class ChatHandler(webapp2.RequestHandler):
+	def get(self):
+		message = ndb.StringProperty()
+		responce = ndb.StringProperty()
+
+
+#		content = self.request.get('content')
+		message = self.request.get('message')
+
+
+		message_model = Message(content = message)
+        content_key = message_model.put()
+        print(message + " : user just said this")
+
+        ai = AI()
+        userinput = getattr(ai, userinput)
+        responce = userinput(message)
+
+
+
+
+		
+
+	def post(self):
+		results_template = env.get_template('chatresponce.html')
+
+		template = jinja_environment.get_template('chat.html')
+		self.response.out.write(template.render({
+			'resp' :responce,
+		}))
+
+
 
 
 	
