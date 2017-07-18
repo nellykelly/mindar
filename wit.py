@@ -47,4 +47,28 @@
 
 
 
-	
+# '''gives the current day where 0 is Monday and 6 is Sunday'''
+# '''
+# Current_Time = current time at the moment
+# def remind("Event"):
+# 	ask the question "What do you want to do?"
+# 	save answer as a variable --> "Event" --> posssibly a dictionary
+# 	ask "What time?"
+# 	save the answer as a key of Event
+# 	ask "Where?"
+# 	save the answer as a key of Event
+# 	"Event" = {time, place}'''
+
+
+
+# '''BRIEF DESCRIPTION INCOMING
+# When website is opened it should check the day and time
+# 	today = time.localtime().tm_wday
+# 	If its already open then maybe it should refresh every min or so
+# When USER clicks REMIMD button it should take them to a form
+# 	The form ask for the EVENT and the DATE/TIME for the event
+# 	The EVENT is then saved as a dictionary with the DATE/TIME as keys
+# 	Maybe these are saved locally?
+# If the website is checking and it detects a key with the current date
+# 	it has an alert or something pop up displaying the EVENT name and time
+# 	'''

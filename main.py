@@ -29,6 +29,7 @@ from datetime import datetime
 '''datetime library --->   https://docs.python.org/3/library/datetime.html#datetime.date'''
 from datetime import timedelta
 import time 
+from google.appengine.ext import ndb
 '''time format ---> https://docs.python.org/2/library/time.html#time.strftime'''
 '''time library  --->    https://docs.python.org/2/library/time.html'''
 
@@ -36,76 +37,8 @@ import time
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-
-
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('')
-        template = jinja_environment.get_template('index.html')
-class RemHandler(webapp2.RequestHandler):
-	def get(self):
-		self.response.write('')
-
-
-class ChatHandler(webapp2.RequestHandler):
-	def get(self):
-		message = ndb.StringProperty()
-		responce = ndb.StringProperty()
-
-
-#		content = self.request.get('content')
-		message = self.request.get('message')
-
-
-		message_model = Message(content = message)
-        content_key = message_model.put()
-        print(message + " : user just said this")
-
-        ai = AI()
-        userinput = getattr(ai, userinput)
-        responce = userinput(message)
-
-
-
-
-		template = jinja_environment.get_template('chat.html')
-		self.response.out.write(template.render({
-			'resp' :responce,
-		}))
-
-	def post(self):
-		results_template = env.get_template('chatresponce.html')
-
-
-app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/chat', Chathandler)
-], debug=True)
-
-
-
-
-x = datetime.now()
-''' date format = (year, month, day, hour, minutes, seconds, milliseconds)'''
-Event_List = {}
-
-'''x = datetime.now().replace(microsecond=0)'''
-today = (time.strftime("%m-%d-%Y"))
-print today
-def remind ():
-	Event = str(raw_input("What do you have to do?"))
-	month = str(raw_input("What month?"))
-	day = str(raw_input("What day?"))
-	year = str(raw_input("What year?"))
-	Date = datetime.date(yea, month, day)
-	DateOfEvent = str(month+"-"+day+"-"+year)
-	if today in EventList:
-		print EventList[today]
-
-
-
-
-
+class Message(ndb.Model):
+	message = ndb.StringProperty()
 
 
 
@@ -137,40 +70,105 @@ class AI():
 			if i == "reminder":
 				reminder = True
 
-		if alarm == True || alarmclock == True:
-			 "would you like to change, delete, or add an alarm?"
+		if alarm == True or alarmclock == True:
+			return "would you like to change, delete, or add an alarm?"
 
-		if alarm == True && change == True:
-
-
-
+		if alarm == True and change == True:
+			return "Sorry, you cant change your alarm yet. You can delete it and create another though"
 
 
 
 
 
-'''gives the current day where 0 is Monday and 6 is Sunday'''
-'''
-Current_Time = current time at the moment
-def remind("Event"):
-	ask the question "What do you want to do?"
-	save answer as a variable --> "Event" --> posssibly a dictionary
-	ask "What time?"
-	save the answer as a key of Event
-	ask "Where?"
-	save the answer as a key of Event
-	"Event" = {time, place}'''
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+		template = jinja_environment.get_template('index.html')
+class RemHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.write('')
+
+
+class ChatHandler(webapp2.RequestHandler):
+	def get(self):
+
+
+#		content = self.request.get('content')
+		message = self.request.get('message')
+
+		message_model = Message(message = message)
+		message_key = message_model.put()
+
+		ai = AI()
+		responce = AI.userinput(message)
+
+		template = jinja_environment.get_template('chat.html')
+		self.response.out.write(template.render({
+            'resp' :responce,
+		}))
+        
+	def post(self):
+		results_template = env.get_template('chatresponce.html')
+
+
+app = webapp2.WSGIApplication([
+    ('/', MainHandler),
+    ('/chat', ChatHandler)
+], debug=True)
 
 
 
-'''BRIEF DESCRIPTION INCOMING
-When website is opened it should check the day and time
-	today = time.localtime().tm_wday
-	If its already open then maybe it should refresh every min or so
-When USER clicks REMIMD button it should take them to a form
-	The form ask for the EVENT and the DATE/TIME for the event
-	The EVENT is then saved as a dictionary with the DATE/TIME as keys
-	Maybe these are saved locally?
-If the website is checking and it detects a key with the current date
-	it has an alert or something pop up displaying the EVENT name and time
-	'''
+
+x = datetime.now()
+''' date format = (year, month, day, hour, minutes, seconds, milliseconds)'''
+Event_List = {}
+
+'''x = datetime.now().replace(microsecond=0)'''
+today = (time.strftime("%m-%d-%Y"))
+print today
+def remind ():
+	Event = str(raw_input("What do you have to do?"))
+	month = str(raw_input("What month?"))
+	day = str(raw_input("What day?"))
+	year = str(raw_input("What year?"))
+	Date = datetime.date(yea, month, day)
+	DateOfEvent = str(month+"-"+day+"-"+year)
+	if today in EventList:
+		print EventList[today]
+
+
+
+
+
+
+
+
+
+
+
+
+
+# '''gives the current day where 0 is Monday and 6 is Sunday'''
+# '''
+# Current_Time = current time at the moment
+# def remind("Event"):
+# 	ask the question "What do you want to do?"
+# 	save answer as a variable --> "Event" --> posssibly a dictionary
+# 	ask "What time?"
+# 	save the answer as a key of Event
+# 	ask "Where?"
+# 	save the answer as a key of Event
+# 	"Event" = {time, place}'''
+
+
+
+# '''BRIEF DESCRIPTION INCOMING
+# When website is opened it should check the day and time
+# 	today = time.localtime().tm_wday
+# 	If its already open then maybe it should refresh every min or so
+# When USER clicks REMIMD button it should take them to a form
+# 	The form ask for the EVENT and the DATE/TIME for the event
+# 	The EVENT is then saved as a dictionary with the DATE/TIME as keys
+# 	Maybe these are saved locally?
+# If the website is checking and it detects a key with the current date
+# 	it has an alert or something pop up displaying the EVENT name and time
+# 	'''
