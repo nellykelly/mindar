@@ -29,6 +29,7 @@ from datetime import datetime
 '''datetime library --->   https://docs.python.org/3/library/datetime.html#datetime.date'''
 from datetime import timedelta
 import time 
+from google.appengine.ext import ndb
 '''time format ---> https://docs.python.org/2/library/time.html#time.strftime'''
 '''time library  --->    https://docs.python.org/2/library/time.html'''
 
@@ -42,9 +43,25 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('')
         template = jinja_environment.get_template('index.html')
+    def post(self):
+    	event = self.request.get("eventName")
+    	date = self.request.get("dayOfEvent")
+    	remind = self.request.get("remindDate")
+    	date = datetime.strptime(date,("%m-%d-%Y")).date()
+    	event_model = EventModel(event = event, eventDate = date, remindWhen = remind).put()
+
+class EventModel(ndb.Model):
+	event = ndb.StringProperty()
+	eventDate = ndb.DateProperty()
+	remindWhen = ndb.StringProperty()
+
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write('')
+		template = jinja_environment.get_template("indexform.html")
+		EventList["dayOfEvent"] = "eventName"
+		EventList =EventModel.query().fetch()
+
 
 
 class ChatHandler(webapp2.RequestHandler):
@@ -79,7 +96,8 @@ class ChatHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/chat', Chathandler)
+    ('/chat', Chathandler),
+    ('/reminder', RemHandler)
 ], debug=True)
 
 
