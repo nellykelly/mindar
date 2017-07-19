@@ -6,14 +6,16 @@
 
 <body>
 
-<h1></DIC> Chat Box</h1>
+<h1></DIC> Chat Box 1.0</h1>
+
+<p> {{resp}}</p>
 
 <div id="chatBox"></div>
 
 <div id="usersOnLine"></div>
 
-<form id="messageForm">
-	<input id="message" type="text">
+<form id="messageForm" action="/chat" method="GET">
+	<input id="message" type="text" name="message">
 	<input id="send" type="submit" value="Send">
 <div id="serverRes"></div>
 </form>

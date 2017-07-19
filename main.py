@@ -43,7 +43,7 @@ class Message(ndb.Model):
 
 
 class AI():
-	def userinput(userinput):
+	def userinput(self, userinput):
 
 		time = False
 		alarm = False
@@ -55,7 +55,7 @@ class AI():
 
 
 		arr = userinput.split()
-		print(arr)
+		logging.info(arr)
 		for i in arr:
 			if i == "alarm":
 				alarm = True
@@ -71,6 +71,7 @@ class AI():
 				reminder = True
 
 		if alarm == True or alarmclock == True:
+			logging.info("alarm")
 			return "would you like to change, delete, or add an alarm?"
 
 		if alarm == True and change == True:
@@ -81,6 +82,8 @@ class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('indexform.html')
         self.response.out.write(template.render())
+
+
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -111,7 +114,7 @@ class RemHandler(webapp2.RequestHandler):
 
 class ChatHandler(webapp2.RequestHandler):
 	def get(self):
-
+		template = jinja_environment.get_template('chat.html')
 
 #		content = self.request.get('content')
 		message = self.request.get('message')
@@ -120,7 +123,7 @@ class ChatHandler(webapp2.RequestHandler):
 		message_key = message_model.put()
 
 		ai = AI()
-		responce = AI.userinput(message)
+		responce = ai.userinput(message)
 
 		template = jinja_environment.get_template('chat.html')
 		self.response.out.write(template.render({
