@@ -82,11 +82,8 @@ class AI():
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-<<<<<<< HEAD
-		template = jinja_environment.get_template('index.html')
-=======
-        self.response.write('')
         template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render())
     def post(self):
     	event = self.request.get("eventName")
     	date = self.request.get("dayOfEvent")
@@ -99,11 +96,11 @@ class EventModel(ndb.Model):
 	eventDate = ndb.DateProperty()
 	remindWhen = ndb.StringProperty()
 
->>>>>>> 7f97dcb0e0a192a184801ed6bfeeabcd4ec54f4e
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write('')
 		template = jinja_environment.get_template("indexform.html")
+		self.response.out.write(template.render())
 		EventList["dayOfEvent"] = "eventName"
 		EventList =EventModel.query().fetch()
 
@@ -133,12 +130,8 @@ class ChatHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-<<<<<<< HEAD
-    ('/chat', ChatHandler)
-=======
-    ('/chat', Chathandler),
+    ('/chat', ChatHandler),
     ('/reminder', RemHandler)
->>>>>>> 7f97dcb0e0a192a184801ed6bfeeabcd4ec54f4e
 ], debug=True)
 
 
