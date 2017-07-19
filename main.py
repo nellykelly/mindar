@@ -77,7 +77,10 @@ class AI():
 			return "Sorry, you cant change your alarm yet. You can delete it and create another though"
 
 
-
+class IndexHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('indexform.html')
+        self.response.out.write(template.render())
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -131,6 +134,7 @@ class ChatHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/chat', ChatHandler),
+    ('/index', IndexHandler),
     ('/reminder', RemHandler)
 ], debug=True)
 
