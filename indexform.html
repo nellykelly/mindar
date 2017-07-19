@@ -2,11 +2,11 @@
       <head><link rel="stylesheet" type="text/css" href="remind.css"></head>
 	<body>
 	<form method="POST" action="/">
-      What is the Event: <input type="text" name="event">
+      What is the Event: <input type="text" name="eventName">
       <br>
-      What day is it on: <input type="text" name="day">
+      What day is it on: <input type="text" name="dayOfEvent" placeholder="MM-DD-YYYY">
       <br>
-      Remind me: <select id = "eventReminder">
+      Remind me: <select id = "eventReminder"  name ="remindDate">
                   <option value = "A day before">A day before</option>
                   <option value = "The day of">The day of</option>
       <br>
