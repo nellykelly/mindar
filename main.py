@@ -37,12 +37,59 @@ from google.appengine.ext import ndb
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+class Message(ndb.Model):
+	message = ndb.StringProperty()
+
+
+
+class AI():
+	def userinput(self, userinput):
+
+		time = False
+		alarm = False
+		check = False
+		what = False
+		alarmclock = False
+		chnage = True
+		reminder = True
+
+
+		arr = userinput.split()
+		logging.info(arr)
+		for i in arr:
+			if i == "alarm":
+				alarm = True
+			if i == "check":
+				check = True
+			if i == "what":
+				what = True
+			if i == "alarmclock":
+				alarmclock = True
+			if i == "change":
+				change = True
+			if i == "reminder":
+				reminder = True
+
+		if alarm == True or alarmclock == True:
+			logging.info("alarm")
+			return "would you like to change, delete, or add an alarm?"
+
+		if alarm == True and change == True:
+			return "Sorry, you cant change your alarm yet. You can delete it and create another though"
+
+
+class IndexHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('indexform.html')
+        self.response.out.write(template.render())
+
+
 
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('')
         template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render())
     def post(self):
     	event = self.request.get("eventName")
     	date = self.request.get("dayOfEvent")
@@ -59,6 +106,7 @@ class RemHandler(webapp2.RequestHandler):
 	def get(self):
 		self.response.write('')
 		template = jinja_environment.get_template("indexform.html")
+		self.response.out.write(template.render())
 		EventList["dayOfEvent"] = "eventName"
 		EventList =EventModel.query().fetch()
 	def post(self):
@@ -73,37 +121,30 @@ class RemHandler(webapp2.RequestHandler):
 
 class ChatHandler(webapp2.RequestHandler):
 	def get(self):
-		message = ndb.StringProperty()
-		responce = ndb.StringProperty()
-
+		template = jinja_environment.get_template('chat.html')
 
 #		content = self.request.get('content')
 		message = self.request.get('message')
 
+		message_model = Message(message = message)
+		message_key = message_model.put()
 
-		message_model = Message(content = message)
-        content_key = message_model.put()
-        print(message + " : user just said this")
-
-        ai = AI()
-        userinput = getattr(ai, userinput)
-        responce = userinput(message)
-
-
-
+		ai = AI()
+		responce = ai.userinput(message)
 
 		template = jinja_environment.get_template('chat.html')
 		self.response.out.write(template.render({
-			'resp' :responce,
+            'resp' :responce,
 		}))
-
+        
 	def post(self):
 		results_template = env.get_template('chatresponce.html')
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/chat', Chathandler),
+    ('/chat', ChatHandler),
+    ('/index', IndexHandler),
     ('/reminder', RemHandler)
 ], debug=True)
 
@@ -134,68 +175,33 @@ def remind ():
 
 
 
-class AI():
-	def userinput(userinput):
-
-		time = False
-		alarm = False
-		check = False
-		what = False
-		alarmclock = False
-		chnage = True
-		reminder = True
-
-
-		arr = userinput.split()
-		print(arr)
-		for i in arr:
-			if i == "alarm":
-				alarm = True
-			if i == "check":
-				check = True
-			if i == "what":
-				what = True
-			if i == "alarmclock":
-				alarmclock = True
-			if i == "change":
-				change = True
-			if i == "reminder":
-				reminder = True
-
-		if alarm == True || alarmclock == True:
-			 "would you like to change, delete, or add an alarm?"
-
-		if alarm == True && change == True:
 
 
 
 
 
+# '''gives the current day where 0 is Monday and 6 is Sunday'''
+# '''
+# Current_Time = current time at the moment
+# def remind("Event"):
+# 	ask the question "What do you want to do?"
+# 	save answer as a variable --> "Event" --> posssibly a dictionary
+# 	ask "What time?"
+# 	save the answer as a key of Event
+# 	ask "Where?"
+# 	save the answer as a key of Event
+# 	"Event" = {time, place}'''
 
 
 
-'''gives the current day where 0 is Monday and 6 is Sunday'''
-'''
-Current_Time = current time at the moment
-def remind("Event"):
-	ask the question "What do you want to do?"
-	save answer as a variable --> "Event" --> posssibly a dictionary
-	ask "What time?"
-	save the answer as a key of Event
-	ask "Where?"
-	save the answer as a key of Event
-	"Event" = {time, place}'''
-
-
-
-'''BRIEF DESCRIPTION INCOMING
-When website is opened it should check the day and time
-	today = time.localtime().tm_wday
-	If its already open then maybe it should refresh every min or so
-When USER clicks REMIMD button it should take them to a form
-	The form ask for the EVENT and the DATE/TIME for the event
-	The EVENT is then saved as a dictionary with the DATE/TIME as keys
-	Maybe these are saved locally?
-If the website is checking and it detects a key with the current date
-	it has an alert or something pop up displaying the EVENT name and time
-	'''
+# '''BRIEF DESCRIPTION INCOMING
+# When website is opened it should check the day and time
+# 	today = time.localtime().tm_wday
+# 	If its already open then maybe it should refresh every min or so
+# When USER clicks REMIMD button it should take them to a form
+# 	The form ask for the EVENT and the DATE/TIME for the event
+# 	The EVENT is then saved as a dictionary with the DATE/TIME as keys
+# 	Maybe these are saved locally?
+# If the website is checking and it detects a key with the current date
+# 	it has an alert or something pop up displaying the EVENT name and time
+# 	'''
