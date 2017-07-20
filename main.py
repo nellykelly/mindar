@@ -91,11 +91,11 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('index.html')
         self.response.out.write(template.render())
     def post(self):
-    	event = self.request.get("eventName")
-    	date = self.request.get("dayOfEvent")
-    	remind = self.request.get("remindDate")
-    	date = datetime.strptime(date,("%m-%d-%Y")).date()
-    	event_model = EventModel(event = event, eventDate = date, remindWhen = remind).put()
+        event = self.request.get("eventName")
+        date = self.request.get("dayOfEvent")
+        remind = self.request.get("remindDate")
+        date = datetime.strptime(date,("%m-%d-%Y")).date()
+        event_model = EventModel(event = event, eventDate = date, remindWhen = remind).put()
 
 class EventModel(ndb.Model):
 	event = ndb.StringProperty()
@@ -110,11 +110,11 @@ class RemHandler(webapp2.RequestHandler):
 		EventList["dayOfEvent"] = "eventName"
 		EventList =EventModel.query().fetch()
 	def post(self):
-    	event = self.request.get("eventName")
-    	date = self.request.get("dayOfEvent")
-    	remind = self.request.get("remindDate")
-    	date = datetime.strptime(date,("%m-%d-%Y")).date()
-    	event_model = EventModel(event = event, eventDate = date, remindWhen = remind).put()
+		event = self.request.get("eventName")
+		date = self.request.get("dayOfEvent")
+		remind = self.request.get("remindDate")
+		date = datetime.strptime(date,("%m-%d-%Y")).date()
+		event_model = EventModel(event = event, eventDate = date, remindWhen = remind).put()
 		
 
 
