@@ -70,18 +70,34 @@ class AI():
 			if i == "reminder":
 				reminder = True
 
-		if alarm == True or alarmclock == True:
-			logging.info("alarm")
-			return "would you like to change, delete, or add an alarm?"
+		
 
 		if alarm == True and change == True:
 			return "Sorry, you cant change your alarm yet. You can delete it and create another though"
 
 
+		if alarm == True and delete == True:
+			logging.info("alarm")
+			return "ok deleting the alarm now"
+
+
+		if alarm == True or alarmclock == True:
+			logging.info("alarm")
+			return "would you like to change, delete, or add an alarm?"
+
 class IndexHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('indexform.html')
         self.response.out.write(template.render())
+
+class RemOutHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('indexform_out.html')
+        self.response.out.write(template.render({
+            'event' :self.request.get("eventName"),
+            'date' :self.request.get("dayOfEvent"),
+            'rem' :self.request.get("remindDate"),
+		}))
 
 
 
@@ -104,12 +120,15 @@ class EventModel(ndb.Model):
 
 class RemHandler(webapp2.RequestHandler):
 	def get(self):
+		EventList = {}
 		self.response.write('')
 		template = jinja_environment.get_template("indexform.html")
 		self.response.out.write(template.render())
 		EventList["dayOfEvent"] = "eventName"
-		EventList =EventModel.query().fetch()
+		EventList = EventModel.query().fetch()
 	def post(self):
+		template = jinja_environment.get_template("indexform_out.html")
+		self.response.out.write(template.render())
 		event = self.request.get("eventName")
 		date = self.request.get("dayOfEvent")
 		remind = self.request.get("remindDate")
@@ -145,6 +164,7 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/chat', ChatHandler),
     ('/index', IndexHandler),
+    ('/remout', RemOutHandler),
     ('/reminder', RemHandler)
 ], debug=True)
 
