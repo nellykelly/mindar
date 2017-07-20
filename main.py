@@ -50,7 +50,7 @@ class AI():
 		check = False
 		what = False
 		alarmclock = False
-		chnage = True
+		change = True
 		reminder = True
 
 
